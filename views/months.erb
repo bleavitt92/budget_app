@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Monthly Overview</title>
+  </head>
+  <body>
+    <h1>Budget Tracker</h1>
+    <p><%= @budget %></p>
+    <link href="/cms.css" rel="stylesheet" type="text/css" />
+    <table>
+      <col width="200">
+      <col width="200">
+      <tr>
+        <td>January</td>
+        <td>February</td>
+      </tr>
+      <tr>
+        <td><%= update_total %></td>
+      </tr>
+    </table>
+  </body>
+</html>

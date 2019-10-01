@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Budget Tracker</title>
+  </head>
+  <body>
+    <h1>Budget Tracker</h1>
+    
+    <form action="/new_category" method='post'>
+      <div>
+        <label for="category_name">Category name:</label>
+        <input name ="category_name" placeholder="Category Name" type="text" value="">
+        <label for="category_amount">Budget: $</label>
+        <input name ="category_amount" placeholder="Amount" type="text" value=""> 
+      </div>
+      <div>
+        <input type="submit" value="Save">
+        <a href="/">Cancel</a>
+      </div>
+    </form>
+  </body>
