@@ -9,6 +9,7 @@ end
 
 before do
   session[:budget] ||= []
+  session[:months] ||= {}
 end
 
 helpers do
@@ -36,6 +37,15 @@ helpers do
     amount_left
   end
 
+  def new_month
+    session[:months][""] = []
+  end
+
+  def reset_budget
+    session[:budget] = []
+    @budget = session[:budget]
+  end
+
   def find_months
     # code to get an array on months included so far in the data
   end
@@ -47,6 +57,8 @@ end
 
 get "/budget" do
   @budget = session[:budget]
+  @month = session[:months].keys[-1] # returns the most recently entered month 
+  @months = session[:months]
   erb :budget
 end
 
@@ -80,6 +92,21 @@ post "/new_spending/:id" do
   id = params[:id].to_i
   amount = params[:new_spending].to_i
   session[:budget][id][:todate] += amount
+
+  redirect "/budget"
+end
+
+# Add a new month
+post "/budget/new_month" do
+  month = params[:current_month]
+  session[:months][month] = session[:budget]
+
+  redirect "/budget"
+end
+
+# finalize this month's budget. Need to save the old month, and clear out @month instance variable
+post "/finalize_month" do
+  new_month
 
   redirect "/budget"
 end

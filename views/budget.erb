@@ -5,44 +5,60 @@
   </head>
   <body>
     <h1>Budget Tracker</h1>
-    <table>
-      <col width="200">
-      <col width="140">
-      <col width="140">
-      <col width="140">
-      <tr>
-        <th scope="col">Category</th>
-        <th scope="col">Monthly Budget</th>
-        <th scope="col">To-Date Spending</th>
-        <th scope="col">Amount Left</th>
-      </tr>
-      <% @budget.each_with_index do |budget, id| %>
+    <h3><%= @months %></h3>
+    <h3><%= @budget %></h3>
+    <h3><%= @month %></h3>
+    <% if @month.nil? || @month.empty? %>
+      <p>
+        <form action="/budget/new_month" method='post'>
+          <label for="current_month">Enter month:</label>
+          <input name ="current_month" type="text" value="">
+        </form>
+      </p>
+    <% else %>
+      <table>
+        <col width="200">
+        <col width="140">
+        <col width="140">
+        <col width="140">
         <tr>
-          <td><%= budget[:category] %></td>
-          <td>$<%= budget[:amount] %></td>
-          <td>
-            $<%= budget[:todate] %>
-            <form action="/new_spending/<%= id %>" method='post'>
-              <input name="new_spending" placeholder="New Spending" type="text" value="">
-            </form>
-          </td>
-          <td><%= budget[:amount].to_i - budget[:todate].to_i %></td>
+          <th scope="col">Category</th>
+          <th scope="col">Monthly Budget</th>
+          <th scope="col">To-Date Spending</th>
+          <th scope="col">Amount Left</th>
         </tr>
-      <% end %>
-      <tfoot>
-        <tr>
-          <td>Total: </td>
-          <td>$<%= update_total %></td>
-          <td><%= todate_spending_total %></td>
-          <td>$<%= amount_left_total %></td>
-        </tr>
-      </tfoot>
-    </table>
+        <% @budget.each_with_index do |budget, id| %>
+          <tr>
+            <td><%= budget[:category] %></td>
+            <td>$<%= budget[:amount] %></td>
+            <td>
+              $<%= budget[:todate] %>
+              <form action="/new_spending/<%= id %>" method='post'>
+                <input name="new_spending" placeholder="New Spending" type="text" value="">
+              </form>
+            </td>
+            <td><%= budget[:amount].to_i - budget[:todate].to_i %></td>
+          </tr>
+        <% end %>
+        <tfoot>
+          <tr>
+            <td>Total: </td>
+            <td>$<%= update_total %></td>
+            <td><%= todate_spending_total %></td>
+            <td>$<%= amount_left_total %></td>
+          </tr>
+        </tfoot>
+      </table>
 
-  </body>
-  <form action="/new_category" method='get'>
-    <button type="submit">New Budget Category</button>
-  </form>
+    </body>
+    <form action="/new_category" method='get'>
+      <button type="submit">New Budget Category</button>
+    </form>
+
+    <form action="/finalize_month" method='post'>
+      <button type="submit">Finalize month</button>
+    </form>
+  <% end %>
 
   <% ['Jan', 'Feb', 'March'].each do |month| %>
     <a href="/budget/<%= month %>"><%= month %></a>
