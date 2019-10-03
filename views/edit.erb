@@ -1,0 +1,18 @@
+<form action="/budget/<%= @current_month %>/<%= params[:id] %>/edit" method='post'>
+  <div>
+    <label class="add-category" for="category_name">Edit category name:</label>
+    <input class="add-category" name ="category_name" placeholder="" type="text" value="<%= @months_budget[@id][:category] %>">
+    <br>
+    <label class="add-category" for="category_amount">Edit budget: $</label>
+    <input class="add-category" name ="category_amount" placeholder="" type="text" value="<%= @months_budget[@id][:amount] %>"> 
+    <br>
+    <label class="add-category" for="todate">Edit amount spent so far: $</label>
+    <input class="add-category" name ="todate" placeholder="" type="text" value="<%= @months_budget[@id][:todate] %>"> 
+  </div>
+  <div>
+    <input class="save" type="submit" value="Save">
+    <form action="/" method='get'>
+      <button class="cancel">Cancel</button>
+    </form>
+  </div>
+</form>

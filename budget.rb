@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 require "tilt/erubis"
+require "date"
 
 configure do
   enable :sessions
@@ -8,105 +9,127 @@ configure do
 end
 
 before do
-  session[:budget] ||= []
-  session[:months] ||= {}
+  session[:budget] ||= {
+    'january' => [], 
+    'february' => [],
+    'march' => [],
+    'april' => [],
+    'may' => [],
+    'june' => [],
+    'july' => [],
+    'august' => [],
+    'september' => [],
+    'october' => [],
+    'november' => [],
+    'december' => [],
+  }
 end
 
 helpers do
-  def update_total
+  def total(current_month)
     total = 0
-    @budget.each do |indiv_budgets|
+    @budget[current_month].each do |indiv_budgets|
       total += indiv_budgets[:amount].to_i
     end
     total
   end
 
-  def todate_spending_total
-    todate_spending = 0
-    @budget.each do |indiv_budgets|
-      todate_spending += indiv_budgets[:todate]
+  def spending_total(current_month)
+    total = 0
+    @budget[current_month].each do |indiv_budgets|
+      total += indiv_budgets[:todate].to_i
     end
-    todate_spending
+    total
   end
+end
 
-  def amount_left_total
-    amount_left = 0
-    @budget.each do |indiv_budgets|
-      amount_left += (indiv_budgets[:amount].to_i - indiv_budgets[:todate].to_i)
-    end
-    amount_left
-  end
+def todays_month # returns a string for what month it is
+  months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 
+            'september', 'october', 'november', 'december']
+  months[Date.today.month-1]
+end
 
-  def new_month
-    session[:months][""] = []
-  end
-
-  def reset_budget
-    session[:budget] = []
-    @budget = session[:budget]
-  end
-
-  def find_months
-    # code to get an array on months included so far in the data
-  end
+get "/home" do
+  current_month = todays_month
+  redirect "/budget/#{current_month}"
 end
 
 get "/" do
-  redirect "/budget"
+  redirect "/home"
 end
 
-get "/budget" do
+get "/budget/:month" do
   @budget = session[:budget]
-  @month = session[:months].keys[-1] # returns the most recently entered month 
-  @months = session[:months]
-  erb :budget
+  @current_month = params[:month]
+  
+  erb :month, layout: :layout
 end
 
-get "/new_category" do
+get "/budget/:month/new_category" do
+  @current_month = params[:month]
+
   erb :new_category
 end
 
-# go to overall month budget
-get "/budget/months" do
+# go to overall year budget
+get "/budget" do
   @budget = session[:budget]
-  erb :months
+
+  erb :year
 end
 
-# go to specific month's budget
-get "/budget/:month" do
-  redirect "/"
+# edit budget item
+get "/budget/:month/:id/edit" do
+  @current_month = params[:month]
+  @id = params[:id].to_i
+  @months_budget = session[:budget][@current_month]
+
+  erb :edit
 end
 
 # add a new category
-post "/new_category" do
+post "/budget/:month/new_category" do
   category_name = params[:category_name]
   category_amount = params[:category_amount]
-  @todate_amount = 0
-  session[:budget] << {category: category_name, amount: category_amount, todate: @todate_amount}
+  current_month = params[:month]
+  todate_amount = 0
+  session[:budget][current_month] << {category: category_name, amount: category_amount, todate: todate_amount}
   session[:success] = "The budget has been created."
-  redirect "/budget"
+  redirect "/budget/#{current_month}"
 end
 
 # add to current spending
-post "/new_spending/:id" do
+post "/budget/:month/new_spending/:id" do
   id = params[:id].to_i
   amount = params[:new_spending].to_i
-  session[:budget][id][:todate] += amount
+  current_month = params[:month]
+  session[:budget][current_month][id][:todate] += amount
 
-  redirect "/budget"
+  redirect "/budget/#{current_month}"
 end
 
-# Add a new month
-post "/budget/new_month" do
-  month = params[:current_month]
-  session[:months][month] = session[:budget]
+# delete budget item
+post "/budget/:month/:id/delete" do
+  current_month = params[:month]
+  id = params[:id].to_i
+  months_budget = session[:budget][current_month]
+  months_budget.delete_at(id)
 
-  redirect "/budget"
+  redirect "/budget/#{current_month}"
 end
 
-# finalize this month's budget. Need to save the old month, and clear out @month instance variable
-post "/finalize_month" do
-  new_month
-
-  redirect "/budget"
+post "/budget/:month/:id/edit" do
+  category_name = params[:category_name]
+  category_amount = params[:category_amount]
+  current_month = params[:month]
+  todate = params[:todate]
+  id = params[:id].to_i
+  todate_amount = 0
+  session[:budget][current_month][id][:category] = category_name
+  session[:budget][current_month][id][:amount] = category_amount
+  session[:budget][current_month][id][:todate] = todate
+  session[:success] = "Budget updated!"
+  redirect "/budget/#{current_month}"
 end
+
+

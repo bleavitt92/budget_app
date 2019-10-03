@@ -1,0 +1,186 @@
+h1 {
+  color: #994C4C;
+  font-size: 50px;
+  text-align: center;
+}
+
+h3 {
+  color: #994C4C;
+  font-size: 40px;
+}
+
+h3.month-title {
+  text-transform: capitalize;
+  text-align: left;
+}
+
+#wrapper {
+  width: 100%;
+  margin: auto;
+}
+
+#left {
+  width: 20%;
+  float: left;
+}
+
+#right {
+  width: 80%;
+  float: right;
+}
+
+/* Table formatting */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  text-align: center;
+  padding: 15px;
+  height: 50px;
+  color: #572B2B;
+}
+
+tfoot {
+  font-weight: bold;
+}
+
+label.add-category {
+  font-size: 30px;
+  color: #572B2B;
+}
+
+input.add-category {
+  font-size: 20px;
+}
+
+button.cancel {
+  background-color: #CC9999;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-left: 10px;
+}
+button.cancel:hover {
+  background-color: #98CCB2;
+}
+
+.button-container form,
+.button-container form div {
+  display: inline;
+}
+
+.button-container button {
+  display: inline;
+  vertical-align: middle;
+  background-color: #CC9999;
+  color: white;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+
+/* Buttons on monthly budget view */
+.new-budget, .go-home {
+  background-color: #CC9999;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-left: 10px;
+}
+.new-budget:hover, .go-home:hover {
+  background-color: #98CCB2;
+}
+
+/* Buttons on new category view */
+.save {
+  background-color: #CC9999;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.save:hover {
+  background-color: #98CCB2;
+}
+
+/* Center the buttons on Homepage */
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 30em;
+  text-align: center;
+}
+
+/* Year overview button on homepage */
+.year_overview {
+  background-color: #CC9999;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.year_overview:hover {
+  background-color: #98CCB2;
+}
+
+/* Dropdown Button to select the months */
+.dropdown-button {
+  background-color: #CC9999;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-list {
+  display: none;
+  position: absolute;
+  background-color: #E3C8C8;
+  min-width: 250px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/* Links inside the dropdown */
+.dropdown-list a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: verdana;
+}
+/* Change color of dropdown links on hover */
+.dropdown-list a:hover {
+  background-color: #ddd;
+}
+/* Show the dropdown list on hover */
+.dropdown:hover .dropdown-list {
+  display: block;
+}
+/* Change the background color of the dropdown button when the dropdown list is shown */
+.dropdown:hover .dropdown-button {
+  background-color: #98CCB2;
+}

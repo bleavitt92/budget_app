@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Budget Tracker</title>
+    <link href="/budget.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Budget Tracker</h1>
+      <div id="right">
+        <%= yield %>
+      </div>
+      <div id="left">
+        <form action='/budget' method='get'>
+          <button class="year_overview" type='Submit'>Yearly Overview</button>
+        </form>
+        <form action='/home' method='get'>
+          <button class="go-home" type='Submit'>This Month's Budget</button>
+        </form>
+        <div class="dropdown">
+          <button class="dropdown-button">Choose a month</button>
+          <div class="dropdown-list">
+            <a href="/budget/january">January</a>
+            <a href="/budget/february">February</a>
+            <a href="/budget/march">March</a>
+            <a href="/budget/april">April</a>
+            <a href="/budget/may">May</a>
+            <a href="/budget/june">June</a>
+            <a href="/budget/july">July</a>
+            <a href="/budget/august">August</a>
+            <a href="/budget/september">September</a>
+            <a href="/budget/october">October</a>
+            <a href="/budget/november">November</a>
+            <a href="/budget/december">December</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

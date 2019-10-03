@@ -1,27 +1,38 @@
-1. Need a button on homepage to see monthly view. On this page show the month, budget, total spent, and amount over or under
-EX: Month | Budget | Total Spending | Difference
-    Jan   | $2500  | $2100          | $400
+Structure: 
 
+@budget = [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
 
-2. Need a button to "archive" the month
-  - create data structure to hold the "archived" months. 
-
-  {
+New Structure: 
+@months =   {
     January => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}], 
     February => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
   }
 
-  - reset the @budget to []
 
-3. NEW IDEAS
-- create a new structure
-- on home page keep the category and monthly budget. Keep the new budget category button
-- have all months in a line as links at the bottom of the page. Each time you click a month, you will be taken to a table that looks like what the current home page is with category, monthly budget, to-date spending, and amount left.  
+  Need the structure to automatically have all months for the year: 
+  @months =  {
+    january => [], 
+    february => [],
+    march => [],
+    april => [],
+    may => [],
+    june => [],
+    july => [],
+    august => [],
+    september => [],
+    october => [],
+    november => [],
+    december => [],
+  }
+
+
+  - edit structure?
+@months =   {
+    January => [{category: "groceries", amount: 350, todate: {item=>cost, item2=>cost2}, {category: "mortgage", amount: 1395, todate: 0}], 
+    February => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
+  }
 
 
 
 
 
-Structure: 
-
-@budget = [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]

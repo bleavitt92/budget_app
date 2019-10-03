@@ -1,0 +1,20 @@
+<table>
+  <col width="150">
+  <col width="150">
+  <col width="150">
+  <col width="150">
+  <tr>
+    <th scope="col">Month</th>
+    <th scope="col">Monthly Budget</th>
+    <th scope="col">Total Spent</th>
+    <th scope="col">Difference</th>
+  </tr>
+  <% ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].each do |month| %>
+    <tr>
+      <td style="text-transform: capitalize;"><%= month %></td>
+      <td>$<%= total(month) %></td>
+      <td>$<%= spending_total(month) %></td>
+      <td>$<%= total(month) - spending_total(month) %></td>
+    </tr>
+  <% end %>
+</table>

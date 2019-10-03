@@ -1,20 +1,15 @@
-<html>
-  <head>
-    <title>Budget Tracker</title>
-  </head>
-  <body>
-    <h1>Budget Tracker</h1>
-    
-    <form action="/new_category" method='post'>
-      <div>
-        <label for="category_name">Category name:</label>
-        <input name ="category_name" placeholder="Category Name" type="text" value="">
-        <label for="category_amount">Budget: $</label>
-        <input name ="category_amount" placeholder="Amount" type="text" value=""> 
-      </div>
-      <div>
-        <input type="submit" value="Save">
-        <a href="/">Cancel</a>
-      </div>
+<form action="/budget/<%= @current_month %>/new_category" method='post'>
+  <div>
+    <label class="add-category" for="category_name">Category name:</label>
+    <input class="add-category" name ="category_name" placeholder="Category Name" type="text" value="">
+    <br>
+    <label class="add-category" for="category_amount">Budget: $</label>
+    <input class="add-category" name ="category_amount" placeholder="Amount" type="text" value=""> 
+  </div>
+  <div>
+    <input class="save" type="submit" value="Save">
+    <form action="/" method='get'>
+      <button class="cancel">Cancel</button>
     </form>
-  </body>
+  </div>
+</form>
