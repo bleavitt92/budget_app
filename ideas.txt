@@ -1,38 +1,16 @@
 Structure: 
 
-@budget = [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
-
-New Structure: 
 @months =   {
-    January => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}], 
-    February => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
-  }
+  January => [{category: "groceries", amount: 350, todate: 0, items: {item1=>cost1, item2=>cost2} } {category: "mortgage", amount: 1395, todate: 0 items: { }}], 
+  February => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
+}
+
+- fix the top item not deleting from editing a budget's items
+- instead of using an id number to refer to the row of the table within the month view, use the category name
+- add in security code:
+  - when add budget category: must enter name and amount must integer
+  - same for when editing the budget category
 
 
-  Need the structure to automatically have all months for the year: 
-  @months =  {
-    january => [], 
-    february => [],
-    march => [],
-    april => [],
-    may => [],
-    june => [],
-    july => [],
-    august => [],
-    september => [],
-    october => [],
-    november => [],
-    december => [],
-  }
-
-
-  - edit structure?
-@months =   {
-    January => [{category: "groceries", amount: 350, todate: {item=>cost, item2=>cost2}, {category: "mortgage", amount: 1395, todate: 0}], 
-    February => [{category: "groceries", amount: 350, todate: 50}, {category: "mortgage", amount: 1395, todate: 0}]
-  }
-
-
-
-
-
+-  need to fix error_for_item_name method. doesn't work
+- need to fix cancel button to get back when trying to add a new category

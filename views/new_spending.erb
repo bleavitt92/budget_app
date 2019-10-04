@@ -1,0 +1,15 @@
+<form action="/budget/<%= @current_month %>/new_spending/<%= @id %>" method='post'>
+  <div>
+    <label class="add-category" for="item">Item:</label>
+    <input class="add-category" name ="item" placeholder="" type="text" value="">
+    <br>
+    <label class="add-category" for="item_amount">Cost: $</label>
+    <input class="add-category" name ="item_amount" placeholder="" type="text" value=""> 
+  </div>
+  <div>
+    <input class="save" type="submit" value="Save">
+    <form action="/" method='get'>
+      <button class="cancel">Cancel</button>
+    </form>
+  </div>
+</form>

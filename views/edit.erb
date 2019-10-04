@@ -1,3 +1,4 @@
+<div class="button-container">
 <form action="/budget/<%= @current_month %>/<%= params[:id] %>/edit" method='post'>
   <div>
     <label class="add-category" for="category_name">Edit category name:</label>
@@ -6,9 +7,23 @@
     <label class="add-category" for="category_amount">Edit budget: $</label>
     <input class="add-category" name ="category_amount" placeholder="" type="text" value="<%= @months_budget[@id][:amount] %>"> 
     <br>
-    <label class="add-category" for="todate">Edit amount spent so far: $</label>
-    <input class="add-category" name ="todate" placeholder="" type="text" value="<%= @months_budget[@id][:todate] %>"> 
+    <label class="add-category" for="todate">Edit expenses: $<%= @months_budget[@id][:todate] %></label>
+    <table>
+      <div class="button-container">
+        <% @months_budget[@id][:items].each do |item, cost| %>
+          <tr>
+            <td><%= item %>: $<%= cost %></td>
+            <td>
+              <form action="/budget/<%= @current_month %>/<%= @id %>/<%= item %>/delete" method='post'>
+                <button type='Submit'>Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% end %> 
+    </table>
   </div>
+</div>
+
   <div>
     <input class="save" type="submit" value="Save">
     <form action="/" method='get'>

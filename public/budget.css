@@ -49,6 +49,12 @@ tfoot {
   font-weight: bold;
 }
 
+a {
+  text-transform: capitalize;
+  color: #572B2B;
+  font-weight: bold;
+}
+
 label.add-category {
   font-size: 30px;
   color: #572B2B;

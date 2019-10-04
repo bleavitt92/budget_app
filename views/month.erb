@@ -1,50 +1,49 @@
 <h3 class="month-title"><%= @current_month %></h3>
-<table>
-  <col width="200">
-  <col width="200">
-  <col width="200">
-  <col width="200">
-  <tr>
-    <th scope="col">Category</th>
-    <th scope="col">Monthly Budget</th>
-    <th scope="col">To-Date Spending</th>
-    <th scope="col">Amount Left</th>
-    <th></th>
-  </tr>
-    <% @budget[@current_month].each_with_index do |budget, id| %>
-      <tr>
-        <td><%= budget[:category] %></td>
-        <td>$<%= budget[:amount] %></td>
-        <td>
-          <form action="/budget/<%= @current_month %>/new_spending/<%= id %>" method='post'>
-            <label for="new_spending">$<%= budget[:todate] %></label>
-            <input name="new_spending" placeholder="New Spending" size="15">
-          </form>
-        </td>
-        <td><%= budget[:amount].to_i - budget[:todate].to_i %></td>
-        <td>
-          <div class="button-container">
+<div class="button-container">
+  <table>
+    <col width="200">
+    <col width="200">
+    <col width="200">
+    <col width="200">
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Monthly Budget</th>
+      <th scope="col">To-Date Spending</th>
+      <th scope="col">Amount Left</th>
+      <th></th>
+    </tr>
+      <% @budget[@current_month].each_with_index do |budget, id| %>
+        <tr>
+          <td><%= budget[:category] %></td>
+          <td>$<%= budget[:amount] %></td>
+          <td>
+            <form action="/budget/<%= @current_month %>/new_spending/<%= id %>" method='get'>
+              <label for="new_spending">$<%= category_spending_total(@current_month, id) %></label>
+              <button type="Submit">Add Expense</button>
+            </form>
+          </td>
+          <td><%= budget[:amount].to_i - budget[:todate].to_i %></td>
+          <td>
             <form action="/budget/<%= @current_month %>/<%= id %>/edit" method='get'>
               <button type='Submit'>Edit</button>
             </form>
             <form action="/budget/<%= @current_month %>/<%= id %>/delete" method='post'>
               <button type='Submit'>Delete</button>
             </form>
-          </div>
-        </td>
+          </td>
+        </tr>
+      <% end %>
+    <tfoot>
+      <tr>
+        <td>Total: </td>
+        <td>$<%= total(@current_month) %></td>
+        <td><%= spending_total(@current_month) %></td>
+        <td><%= total(@current_month) - spending_total(@current_month) %></td>
+        <td></td>
       </tr>
-    <% end %>
-  <tfoot>
-    <tr>
-      <td>Total: </td>
-      <td>$<%= total(@current_month) %></td>
-      <td><%= spending_total(@current_month) %></td>
-      <td><%= total(@current_month) - spending_total(@current_month) %></td>
-      <td></td>
-    </tr>
-  </tfoot>
-</table>
-
+    </tfoot>
+  </table>
+</div>
 <br>
 <form action="/budget/<%= @current_month %>/new_category" method='get'>
   <button class="new-budget" type="submit">Add Budget Category</button>

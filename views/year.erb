@@ -11,7 +11,7 @@
   </tr>
   <% ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].each do |month| %>
     <tr>
-      <td style="text-transform: capitalize;"><%= month %></td>
+      <td><a href="/budget/<%= month %>"><%= month %></td>
       <td>$<%= total(month) %></td>
       <td>$<%= spending_total(month) %></td>
       <td>$<%= total(month) - spending_total(month) %></td>
