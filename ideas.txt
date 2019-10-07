@@ -6,11 +6,5 @@ Structure:
 }
 
 - fix the top item not deleting from editing a budget's items
-- instead of using an id number to refer to the row of the table within the month view, use the category name
-- add in security code:
-  - when add budget category: must enter name and amount must integer
-  - same for when editing the budget category
 
-
--  need to fix error_for_item_name method. doesn't work
-- need to fix cancel button to get back when trying to add a new category
+- when pull up a new month, automatically include the past month's budget items if add to all button is checked

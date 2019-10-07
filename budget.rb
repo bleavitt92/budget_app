@@ -57,7 +57,11 @@ end
 def error_for_name(name, current_month)
   if !(1..100).cover? name.size
     "Must be between 1 and 100 characters."
-  elsif session[:budget][current_month].any? { |budget_item| budget_item[:category] == name }
+  end
+end
+
+def name_not_unique(name, current_month)
+  if session[:budget][current_month].any? { |budget_item| budget_item[:category] == name }
     "Category name must be unique."
   end
 end
@@ -66,8 +70,6 @@ end
 def error_for_item_name(name, current_month)
   if !(1..100).cover? name.size
     "Must be between 1 and 100 characters."
-  elsif session[:budget][current_month].any? { |budget_item| budget_item[:item] == name }
-    "Item name must be unique."
   end
 end
 
@@ -133,6 +135,12 @@ get "/budget/:month/new_spending/:id" do
   erb :new_spending
 end
 
+post "/budget/:current_month/duplicate/:month" do
+  @current_month = params[:current_month]
+  @month_to_copy = params[:month]
+
+end
+
 # add a new category
 post "/budget/:month/new_category" do
   category_name = params[:category_name]
@@ -140,12 +148,33 @@ post "/budget/:month/new_category" do
   current_month = params[:month]
   todate_amount = 0
 
-  error = error_for_name(category_name, current_month) || error = error_for_amount(category_amount)
+  error = error_for_name(category_name, current_month) || error = error_for_amount(category_amount) || name_not_unique(category_name, current_month)
   if error
     session[:error] = error
     redirect "/budget/#{current_month}/new_category"
   else
     session[:budget][current_month] << {category: category_name, amount: category_amount, todate: todate_amount, items: {}}
+
+    session[:success] = "The budget has been created."
+    redirect "/budget/#{current_month}"
+  end
+end
+
+# add a new category
+post "/budget/:month/new_category/all_months" do
+  category_name = params[:category_name]
+  category_amount = params[:category_amount]
+  current_month = params[:month]
+  todate_amount = 0
+
+  error = error_for_name(category_name, current_month) || error = error_for_amount(category_amount) || name_not_unique(category_name, current_month)
+  if error
+    session[:error] = error
+    redirect "/budget/#{current_month}/new_category"
+  else
+    session[:budget].each do |month, budgets|
+      session[:budget][month] << {category: category_name, amount: category_amount, todate: todate_amount, items: {}}
+    end
     session[:success] = "The budget has been created."
     redirect "/budget/#{current_month}"
   end
@@ -159,9 +188,13 @@ post "/budget/:month/new_spending/:id" do
   item_amount = params[:item_amount]
 
   error = error_for_amount(item_amount) || error = error_for_item_name(item, current_month)
-  if 
+  if error
     session[:error] = error
-    redirect "/budget/#{current_month}/new_spending/#{id}"   
+    redirect "/budget/#{current_month}/new_spending/#{id}"    
+  elsif session[:budget][current_month][id][:items].any? { |name, value| name == item }
+    session[:budget][current_month][id][:items][item] += item_amount.to_i
+    session[:budget][current_month][id][:todate] += item_amount.to_i
+    redirect "/budget/#{current_month}"
   else
     session[:budget][current_month][id][:items][item] = item_amount.to_i
     session[:budget][current_month][id][:todate] += item_amount.to_i
@@ -186,12 +219,17 @@ post "/budget/:month/:id/edit" do
   current_month = params[:month]
   todate = params[:todate]
   id = params[:id].to_i
-
-  session[:budget][current_month][id][:category] = category_name
-  session[:budget][current_month][id][:amount] = category_amount
-  session[:budget][current_month][id][:todate] = todate.to_i
-  session[:success] = "Budget updated!"
   
+  error = error_for_amount(category_amount) || error = error_for_name(category_name, current_month)
+  if error
+    session[:error] = error
+    redirect "/budget/#{current_month}/#{id}/edit" 
+  else
+    session[:budget][current_month][id][:category] = category_name
+    session[:budget][current_month][id][:amount] = category_amount
+    session[:budget][current_month][id][:todate] = todate.to_i
+    session[:success] = "Budget updated!"
+  end
   redirect "/budget/#{current_month}"
 end
 

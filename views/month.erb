@@ -22,7 +22,7 @@
               <button type="Submit">Add Expense</button>
             </form>
           </td>
-          <td><%= budget[:amount].to_i - budget[:todate].to_i %></td>
+          <td><%= budget[:amount].to_i - category_spending_total(@current_month, id) %></td>
           <td>
             <form action="/budget/<%= @current_month %>/<%= id %>/edit" method='get'>
               <button type='Submit'>Edit</button>

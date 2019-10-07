@@ -29,6 +29,11 @@ h3.month-title {
   float: right;
 }
 
+.flash-error {
+  font-size: 20px;
+  text-align: center;
+}
+
 /* Table formatting */
 tr:nth-child(even) {
   background-color: #f2f2f2;

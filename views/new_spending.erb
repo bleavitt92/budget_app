@@ -1,4 +1,4 @@
-<form action="/budget/<%= @current_month %>/new_spending/<%= @id %>" method='post'>
+<form action="/budget/<%= @current_month %>/new_spending/<%= @id %>/all" method='get'>
   <div>
     <label class="add-category" for="item">Item:</label>
     <input class="add-category" name ="item" placeholder="" type="text" value="">
@@ -8,8 +8,9 @@
   </div>
   <div>
     <input class="save" type="submit" value="Save">
-    <form action="/" method='get'>
-      <button class="cancel">Cancel</button>
-    </form>
   </div>
 </form>
+
+  <form action="/" method='get'>
+    <button class="cancel">Cancel</button>
+  </form>

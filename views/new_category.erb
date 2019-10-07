@@ -7,7 +7,10 @@
     <input class="add-category" name ="category_amount" placeholder="Amount" type="text" value=""> 
   </div>
   <div>
-    <input class="save" type="submit" value="Save">
+    <input class="save" type="submit" value="Add to <%= @current_month %>">
+  </div>
+  <div>
+    <input class="save" type="submit" value="Add to all months" formaction="/budget/<%= @current_month %>/new_category/all_months">
   </div>
 </form>
 <form action="/" method='get'>

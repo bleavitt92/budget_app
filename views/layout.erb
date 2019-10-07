@@ -8,6 +8,11 @@
       <h1>Budget Tracker</h1>
       <div id="right">
         <%= yield %>
+        <% if session[:error] %>
+          <div class="flash-error">
+            <p><%= session.delete(:error) %></p>
+          </div>
+        <% end %>
       </div>
       <div id="left">
         <form action='/budget' method='get'>
@@ -36,11 +41,5 @@
       </div>
     </div>
   </body>
-  
-  <% if session[:error] %>
-    <div class="flash error">
-      <p><%= session.delete(:error) %></p>
-    </div>
-  <% end %>
 </html>
 
